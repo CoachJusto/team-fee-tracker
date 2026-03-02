@@ -1,33 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Team Fee Tracker</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Team Roster</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #111;
+  color: white;
+  text-align: center;
+}
+
+/* Main Buttons */
+.main-btn {
+  padding: 15px 25px;
+  margin: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #44D62C;
+  border: none;
+  cursor: pointer;
+}
+
+/* Small Action Buttons */
+.action-btn {
+  padding: 8px 15px;
+  margin: 5px;
+  font-size: 14px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
+/* Sections */
+.section {
+  display: none;
+  padding: 40px;
+  min-height: 300px;
+  position: relative;
+}
+
+/* Watermark background */
+.section::before {
+  content: attr(data-name);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 80px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  pointer-events: none;
+  z-index: 0;
+  white-space: pre-wrap;
+}
+
+/* Athlete list */
+ul {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+li {
+  padding: 10px;
+  margin: 5px auto;
+  background: rgba(0,0,0,0.6);
+  width: 200px;
+  cursor: pointer;
+}
+
+</style>
 </head>
+
 <body>
 
-    <h1>Monthly Team Fee Tracker</h1>
+<h1>Sac Town Ballers Roster</h1>
 
-    <!-- Division Buttons -->
-    <div id="divisionScreen">
-        <button onclick="openDivision('jrhigh')">JR HIGH</button>
-        <button onclick="openDivision('jv')">JV</button>
-        <button onclick="openDivision('varsity')">VARSITY</button>
-    </div>
+<!-- Main Buttons -->
+<button class="main-btn" onclick="showSection('jr')">JR High</button>
+<button class="main-btn" onclick="showSection('jv')">JV</button>
+<button class="main-btn" onclick="showSection('varsity')">Varsity</button>
 
-    <!-- Athlete Screen -->
-    <div id="athleteScreen" class="hidden">
-        <button class="backBtn" onclick="goBack()">⬅ Back</button>
-        <h2 id="divisionTitle"></h2>
+<br>
 
-        <div class="addAthlete">
-            <input type="text" id="athleteName" placeholder="Enter Athlete Name">
-            <button onclick="addAthlete()">Add Athlete</button>
-        </div>
+<!-- Action Buttons -->
+<button class="action-btn" onclick="addAthlete()">ADD ATHLETE</button>
+<button class="action-btn" onclick="toggleRemoveMode()">REMOVE ATHLETE</button>
 
-        <div id="athleteList"></div>
-    </div>
+<!-- Sections -->
+<div id="jr" class="section" data-name="JR HIGH JR HIGH JR HIGH JR HIGH JR HIGH">
+  <h2>JR High</h2>
+  <ul id="jr-list"></ul>
+</div>
 
-    <script src="script.js"></script>
+<div id="jv" class="section" data-name="JV JV JV JV JV JV JV JV JV JV">
+  <h2>JV</h2>
+  <ul id="jv-list"></ul>
+</div>
+
+<div id="varsity" class="section" data-name="VARSITY VARSITY VARSITY VARSITY VARSITY">
+  <h2>Varsity</h2>
+  <ul id="varsity-list"></ul>
+</div>
+
+<script>
+
+let currentSection = null;
+let removeMode = false;
+
+function showSection(section) {
+  document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+  document.getElementById(section).style.display = 'block';
+  currentSection = section;
+}
+
+function addAthlete() {
+  if (!currentSection) {
+    alert("Select a section first.");
+    return;
+  }
+
+  const name = prompt("Enter athlete name:");
+  if (!name) return;
+
+  const li = document.createElement("li");
+  li.textContent = name;
+
+  li.onclick = function() {
+    if (removeMode) {
+      li.remove();
+    }
+  };
+
+  document.getElementById(currentSection + "-list").appendChild(li);
+}
+
+function toggleRemoveMode() {
+  removeMode = !removeMode;
+  alert(removeMode ? "Click an athlete to REMOVE." : "Remove mode OFF.");
+}
+
+</script>
+
 </body>
 </html>
