@@ -1,122 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Team Roster</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #111;
-  color: white;
-  text-align: center;
-}
-
-/* Main Buttons */
-.main-btn {
-  padding: 15px 25px;
-  margin: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  background: #44D62C;
-  border: none;
-  cursor: pointer;
-}
-
-/* Small Action Buttons */
-.action-btn {
-  padding: 8px 15px;
-  margin: 5px;
-  font-size: 14px;
-  background: white;
-  color: black;
-  border: none;
-  cursor: pointer;
-}
-
-/* Sections */
-.section {
-  display: none;
-  padding: 40px;
-  min-height: 300px;
-  position: relative;
-}
-
-/* Watermark background */
-.section::before {
-  content: attr(data-name);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 80px;
-  font-weight: 900;
-  color: rgba(255,255,255,0.05);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  pointer-events: none;
-  z-index: 0;
-  white-space: pre-wrap;
-}
-
-/* Athlete list */
-ul {
-  list-style: none;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-}
-
-li {
-  padding: 10px;
-  margin: 5px auto;
-  background: rgba(0,0,0,0.6);
-  width: 200px;
-  cursor: pointer;
-}
-
-</style>
-</head>
-
-<body>
-
-<h1>Sac Town Ballers Roster</h1>
-
-<!-- Main Buttons -->
-<button class="main-btn" onclick="showSection('jr')">JR High</button>
-<button class="main-btn" onclick="showSection('jv')">JV</button>
-<button class="main-btn" onclick="showSection('varsity')">Varsity</button>
-
-<br>
-
-<!-- Action Buttons -->
-<button class="action-btn" onclick="addAthlete()">ADD ATHLETE</button>
-<button class="action-btn" onclick="toggleRemoveMode()">REMOVE ATHLETE</button>
-
-<!-- Sections -->
-<div id="jr" class="section" data-name="JR HIGH JR HIGH JR HIGH JR HIGH JR HIGH">
-  <h2>JR High</h2>
-  <ul id="jr-list"></ul>
-</div>
-
-<div id="jv" class="section" data-name="JV JV JV JV JV JV JV JV JV JV">
-  <h2>JV</h2>
-  <ul id="jv-list"></ul>
-</div>
-
-<div id="varsity" class="section" data-name="VARSITY VARSITY VARSITY VARSITY VARSITY">
-  <h2>Varsity</h2>
-  <ul id="varsity-list"></ul>
-</div>
-
 <script>
 
 let currentSection = null;
-let removeMode = false;
 
 function showSection(section) {
   document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
@@ -136,21 +20,21 @@ function addAthlete() {
   const li = document.createElement("li");
   li.textContent = name;
 
+  // Default style (RED, no background)
+  li.style.color = "red";
+  li.style.fontWeight = "bold";
+  li.style.cursor = "pointer";
+
   li.onclick = function() {
-    if (removeMode) {
-      li.remove();
+    if (li.style.color === "red") {
+      const confirmChange = confirm("Mark this athlete as confirmed?");
+      if (confirmChange) {
+        li.style.color = "#44D62C"; // Team green
+      }
     }
   };
 
   document.getElementById(currentSection + "-list").appendChild(li);
 }
 
-function toggleRemoveMode() {
-  removeMode = !removeMode;
-  alert(removeMode ? "Click an athlete to REMOVE." : "Remove mode OFF.");
-}
-
 </script>
-
-</body>
-</html>
