@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Fee Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Monthly Team Fee Tracker</h1>
+
+    <!-- Division Buttons -->
+    <div id="divisionScreen">
+        <button onclick="openDivision('jrhigh')">JR HIGH</button>
+        <button onclick="openDivision('jv')">JV</button>
+        <button onclick="openDivision('varsity')">VARSITY</button>
+    </div>
+
+    <!-- Athlete Screen -->
+    <div id="athleteScreen" class="hidden">
+        <button class="backBtn" onclick="goBack()">⬅ Back</button>
+        <h2 id="divisionTitle"></h2>
+
+        <div class="addAthlete">
+            <input type="text" id="athleteName" placeholder="Enter Athlete Name">
+            <button onclick="addAthlete()">Add Athlete</button>
+        </div>
+
+        <div id="athleteList"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
